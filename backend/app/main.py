@@ -27,9 +27,14 @@ app.include_router(api_router, prefix="/api/v1")
 @app.on_event("startup")
 async def startup_event():
     """Initialize database on startup."""
-    init_db()
-    print(f"🚀 {settings.APP_NAME} v{settings.APP_VERSION} started!")
-    print(f"📚 API Documentation: http://localhost:8000/docs")
+    try:
+        init_db()
+        print(f"🚀 {settings.APP_NAME} v{settings.APP_VERSION} started!")
+        print(f"📚 API Documentation: http://localhost:8000/docs")
+    except Exception as e:
+        print(f"❌ Database initialization failed: {str(e)}")
+        # We don't raise here so the app can still serve the /health endpoint 
+        # allowing us to see logs in production even if the DB is down.
 
 
 @app.get("/")
