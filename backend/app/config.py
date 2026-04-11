@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://localhost:6379/0"
     
     # JWT (validation only - tokens created by external auth)
-    JWT_SECRET_KEY: str
+    JWT_SECRET_KEY: str = "default-development-secret-key-change-in-production"
     JWT_ALGORITHM: str = "HS256"
     
     # AI Service Configuration
